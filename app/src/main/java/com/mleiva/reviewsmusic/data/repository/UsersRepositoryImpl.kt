@@ -1,5 +1,6 @@
 package com.mleiva.reviewsmusic.data.repository
 
+import android.net.Uri
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.StorageReference
 import com.mleiva.reviewsmusic.core.Constants.USERS
@@ -10,6 +11,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -19,7 +21,8 @@ import javax.inject.Named
  * Creted by: Marcelo Leiva on 26-02-2024 at 20:31
  ***/
 class UsersRepositoryImpl @Inject constructor(
-    @Named(USERS) private val usersRef: CollectionReference
+    @Named(USERS) private val usersRef: CollectionReference,
+    @Named(USERS) private val storageReference: StorageReference
 ): UsersRepository {
 
     override suspend fun create(user: User): Response<Boolean> {
@@ -40,6 +43,34 @@ class UsersRepositoryImpl @Inject constructor(
         }
         awaitClose{
             snapshotListener.remove()
+        }
+    }
+
+    override suspend fun saveImage(file: File): Response<String> {
+        return try {
+            val fromFile = Uri.fromFile(file)
+            val ref = storageReference.child(file.name)
+            val uploadTask = ref.putFile(fromFile).await()
+            val url = ref.downloadUrl.await()
+            return Response.Success(url.toString())
+        }catch (e: Exception){
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
+    override suspend fun update(user: User, image: String): Response<Boolean> {
+        return try {
+
+            val map: MutableMap<String, Any> = HashMap()
+            map["userName"] = user.userName
+            map["image"] = user.image
+
+            usersRef.document(user.id).update(map).await()
+            Response.Success(true)
+        }catch (e: Exception){
+            e.printStackTrace()
+            Response.Failure(e)
         }
     }
 

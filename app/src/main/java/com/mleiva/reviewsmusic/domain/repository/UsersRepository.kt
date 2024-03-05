@@ -3,6 +3,7 @@ package com.mleiva.reviewsmusic.domain.repository
 import com.mleiva.reviewsmusic.domain.model.Response
 import com.mleiva.reviewsmusic.domain.model.User
 import kotlinx.coroutines.flow.Flow
+import java.io.File
 
 /***
  * Project: ReviewsMusic
@@ -13,5 +14,7 @@ interface UsersRepository {
 
     suspend fun create(user: User): Response<Boolean>
     fun getUserById(id: String): Flow<User>
+    suspend fun saveImage(file: File): Response<String>
+    suspend fun update(user: User, image: String): Response<Boolean>
 
 }

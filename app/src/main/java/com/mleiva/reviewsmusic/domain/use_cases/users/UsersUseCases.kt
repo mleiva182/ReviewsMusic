@@ -7,5 +7,7 @@ package com.mleiva.reviewsmusic.domain.use_cases.users
  ***/
 data class UsersUseCases(
     val create: Create,
-    val getUserById: GetUserById
+    val getUserById: GetUserById,
+    val saveImage: SaveImage,
+    val update: Update
 )

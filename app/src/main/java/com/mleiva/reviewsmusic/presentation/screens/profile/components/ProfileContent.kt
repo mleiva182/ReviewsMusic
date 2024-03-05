@@ -3,6 +3,7 @@ package com.mleiva.reviewsmusic.presentation.screens.profile.components
 import android.app.Activity
 import android.content.Intent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -21,6 +23,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -33,9 +36,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.mleiva.reviewsmusic.R
 import com.mleiva.reviewsmusic.presentation.MainActivity
 import com.mleiva.reviewsmusic.presentation.components.DefaultButton
+import com.mleiva.reviewsmusic.presentation.navigation.DetailsScreen
 import com.mleiva.reviewsmusic.presentation.screens.login.LoginViewModel
 import com.mleiva.reviewsmusic.presentation.screens.profile.ProfileViewModel
 import com.mleiva.reviewsmusic.presentation.ui.theme.ReviewsMusicTheme
@@ -73,12 +78,33 @@ fun ProfileContent(paddingValues: PaddingValues,
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(50.dp))
-                Image(
+
+
+                if (viewModel.userData.image != ""){
+                    AsyncImage(
+                        modifier = Modifier
+                            .height(100.dp)
+                            .width(100.dp)
+                            .clip(CircleShape),
+                        model = viewModel.userData.image,
+                        contentDescription = "Selected Image",
+                        contentScale = ContentScale.Crop)
+
+                }else {
+                    Image(
+                        modifier = Modifier
+                            .height(120.dp),
+                        painter = painterResource(id = R.drawable.user),
+                        contentDescription = "Imagen de usuario"
+                    )
+                }
+
+                /*Image(
                     modifier = Modifier
                         .size(115.dp),
                     painter = painterResource(id = R.drawable.user),
-                    contentDescription = ""
-                )
+                    contentDescription = "".
+                )*/
             }
         }
         Spacer(modifier = Modifier.height(30.dp))
@@ -100,7 +126,9 @@ fun ProfileContent(paddingValues: PaddingValues,
             text = "Editar datos",
             icon = Icons.Default.Edit,
             onClick = {
-                
+                navHostController.navigate(
+                    route = DetailsScreen.ProfileEdit.passUser(viewModel.userData.toJson())
+                )
             }
         )
 

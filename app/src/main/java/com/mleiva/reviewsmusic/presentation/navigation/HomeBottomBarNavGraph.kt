@@ -37,7 +37,7 @@ fun HomeBottomBarNavGraph(paddingValues: PaddingValues, navHostController: NavHo
             ProfileScreen(navHostController)
         }
 
-        //detailsNavGrapgh(navHostController)
+        detailsNavGraph(navHostController)
     }
 
 }

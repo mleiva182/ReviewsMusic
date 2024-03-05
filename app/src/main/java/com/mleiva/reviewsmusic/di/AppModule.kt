@@ -5,6 +5,8 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.mleiva.reviewsmusic.core.Constants.USERS
 import com.mleiva.reviewsmusic.data.repository.AuthRepositoryImpl
 import com.mleiva.reviewsmusic.data.repository.UsersRepositoryImpl
@@ -17,6 +19,8 @@ import com.mleiva.reviewsmusic.domain.use_cases.auth.Login
 import com.mleiva.reviewsmusic.domain.use_cases.auth.SignUp
 import com.mleiva.reviewsmusic.domain.use_cases.users.Create
 import com.mleiva.reviewsmusic.domain.use_cases.users.GetUserById
+import com.mleiva.reviewsmusic.domain.use_cases.users.SaveImage
+import com.mleiva.reviewsmusic.domain.use_cases.users.Update
 import com.mleiva.reviewsmusic.domain.use_cases.users.UsersUseCases
 import dagger.Module
 import dagger.Provides
@@ -60,7 +64,16 @@ object AppModule {
     @Provides
     fun provideUsersUseCases(repository: UsersRepository) = UsersUseCases(
         create = Create(repository),
-        getUserById = GetUserById(repository)
+        getUserById = GetUserById(repository),
+        saveImage = SaveImage(repository),
+        update = Update(repository)
     )
+
+    @Provides
+    fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
+
+    @Provides
+    @Named(USERS)
+    fun provideStorageUsersRef(storage: FirebaseStorage): StorageReference = storage.reference.child(USERS)
 
 }
