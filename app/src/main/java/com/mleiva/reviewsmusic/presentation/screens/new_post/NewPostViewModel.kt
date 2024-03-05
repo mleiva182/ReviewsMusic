@@ -11,7 +11,7 @@ import com.mleiva.reviewsmusic.R
 import com.mleiva.reviewsmusic.domain.model.Post
 import com.mleiva.reviewsmusic.domain.model.Response
 import com.mleiva.reviewsmusic.domain.use_cases.auth.AuthUseCase
-import com.mleiva.reviewsmusic.domain.use_cases.posts.PostUseCases
+import com.mleiva.reviewsmusic.domain.use_cases.posts.PostsUseCases
 import com.mleiva.reviewsmusic.utils.ComposeFileProvider
 import com.optic.gamermvvmapp.presentation.utils.ResultingActivityHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class NewPostViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val postsUseCases: PostUseCases,
+    private val postsUseCases: PostsUseCases,
     private val authUseCase: AuthUseCase
 ): ViewModel() {
 

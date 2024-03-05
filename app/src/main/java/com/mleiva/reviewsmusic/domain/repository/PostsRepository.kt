@@ -2,6 +2,7 @@ package com.mleiva.reviewsmusic.domain.repository
 
 import com.mleiva.reviewsmusic.domain.model.Post
 import com.mleiva.reviewsmusic.domain.model.Response
+import kotlinx.coroutines.flow.Flow
 import java.io.File
 
 /***
@@ -12,5 +13,7 @@ import java.io.File
 interface PostsRepository {
 
     suspend fun create(post: Post, file: File): Response<Boolean>
+    fun getPostsByUserId(idUser: String): Flow<Response<List<Post>>>
+    suspend fun delete(idPost: String): Response<Boolean>
 
 }

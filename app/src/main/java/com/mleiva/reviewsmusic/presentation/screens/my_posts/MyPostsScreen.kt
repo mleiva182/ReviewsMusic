@@ -34,7 +34,6 @@ fun MyPostsScreen(navHostController: NavHostController){
 
     Scaffold(
       content = {
-          Text(text = "MyPostsScreen")
           GetPostsByIdUser(navHostController = navHostController)
       },
         floatingActionButton = {
