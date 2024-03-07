@@ -2,6 +2,7 @@ package com.mleiva.reviewsmusic.data.repository
 
 import android.net.Uri
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.storage.StorageReference
 import com.mleiva.reviewsmusic.core.Constants.POSTS
 import com.mleiva.reviewsmusic.core.Constants.USERS
@@ -99,6 +100,72 @@ class PostsRepositoryImpl @Inject constructor(
     override suspend fun delete(idPost: String): Response<Boolean> {
         return try {
             postsRef.document(idPost).delete().await()
+            Response.Success(true)
+        }catch (e: Exception){
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
+    override fun getPosts(): Flow<Response<List<Post>>> = callbackFlow {
+
+        val snapShotListener = postsRef.addSnapshotListener{ snapshot, e ->
+            GlobalScope.launch(Dispatchers.IO) {
+                val postResponse = if (snapshot != null){
+
+                    val posts = snapshot.toObjects(Post::class.java)
+
+                    snapshot.documents.forEachIndexed{ index, documentSnapshot ->
+                        posts[index].id = documentSnapshot.id
+                    }
+
+                    val idUserArray = ArrayList<String>()
+
+                    posts.forEach {
+                        idUserArray.add(it.idUser)
+                    }
+                    val idUserList = idUserArray.toSet().toList()
+
+                    idUserList.map {id ->
+                        async {
+                            val user = usersRef.document(id).get().await().toObject(User::class.java)!!
+                            posts.forEach { post ->
+                                if (post.idUser == id){
+                                    post.user = user
+                                }
+                            }
+                        }
+                    }.forEach {
+                        it.await()
+                    }
+
+                    Response.Success(posts)
+                }else{
+                    Response.Failure(e)
+                }
+                trySend(postResponse)
+            }
+
+        }
+        awaitClose{
+            snapShotListener.remove()
+        }
+
+    }
+
+    override suspend fun like(idPost: String, idUser: String): Response<Boolean> {
+        return try {
+            postsRef.document(idPost).update("likes", FieldValue.arrayUnion(idUser)).await()
+            Response.Success(true)
+        }catch (e: Exception){
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
+    override suspend fun deleteLike(idPost: String, idUser: String): Response<Boolean> {
+        return try {
+            postsRef.document(idPost).update("likes", FieldValue.arrayRemove(idUser)).await()
             Response.Success(true)
         }catch (e: Exception){
             e.printStackTrace()

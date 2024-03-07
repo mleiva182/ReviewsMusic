@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.mleiva.reviewsmusic.presentation.screens.my_posts.MyPostsScreen
+import com.mleiva.reviewsmusic.presentation.screens.posts.PostsScreen
 import com.mleiva.reviewsmusic.presentation.screens.profile.ProfileScreen
 
 /***
@@ -27,7 +28,7 @@ fun HomeBottomBarNavGraph(paddingValues: PaddingValues, navHostController: NavHo
     ){
 
         composable(route = HomeBottomBarScreen.Posts.route){
-            //PostScreen(navHostController)
+            PostsScreen(navHostController)
         }
 
         composable(route = HomeBottomBarScreen.MyPosts.route){

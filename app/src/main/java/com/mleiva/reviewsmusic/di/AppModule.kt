@@ -21,8 +21,11 @@ import com.mleiva.reviewsmusic.domain.use_cases.auth.LogOut
 import com.mleiva.reviewsmusic.domain.use_cases.auth.Login
 import com.mleiva.reviewsmusic.domain.use_cases.auth.SignUp
 import com.mleiva.reviewsmusic.domain.use_cases.posts.CreatePosts
+import com.mleiva.reviewsmusic.domain.use_cases.posts.DeleteLikePost
 import com.mleiva.reviewsmusic.domain.use_cases.posts.DeletePost
+import com.mleiva.reviewsmusic.domain.use_cases.posts.GetPosts
 import com.mleiva.reviewsmusic.domain.use_cases.posts.GetPostsByIdUser
+import com.mleiva.reviewsmusic.domain.use_cases.posts.LikePost
 import com.mleiva.reviewsmusic.domain.use_cases.posts.PostsUseCases
 import com.mleiva.reviewsmusic.domain.use_cases.users.Create
 import com.mleiva.reviewsmusic.domain.use_cases.users.GetUserById
@@ -83,7 +86,10 @@ object AppModule {
     fun providesPostsUseCases(repository: PostsRepository) = PostsUseCases(
         create = CreatePosts(repository),
         getPostsByIdUser = GetPostsByIdUser(repository),
-        deletePost = DeletePost(repository)
+        deletePost = DeletePost(repository),
+        getPosts = GetPosts(repository),
+        likePost = LikePost(repository),
+        deleteLikePost = DeleteLikePost(repository)
     )
 
     @Provides

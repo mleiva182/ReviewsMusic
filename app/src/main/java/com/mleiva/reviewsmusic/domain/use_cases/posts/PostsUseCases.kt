@@ -8,5 +8,8 @@ package com.mleiva.reviewsmusic.domain.use_cases.posts
 data class PostsUseCases(
     val create: CreatePosts,
     val getPostsByIdUser: GetPostsByIdUser,
-    val deletePost: DeletePost
+    val deletePost: DeletePost,
+    val getPosts: GetPosts,
+    val likePost: LikePost,
+    val deleteLikePost: DeleteLikePost
 )
