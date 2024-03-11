@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.mleiva.reviewsmusic.presentation.screens.detail_post.DetailPostScreen
 import com.mleiva.reviewsmusic.presentation.screens.new_post.NewPostScreen
 import com.mleiva.reviewsmusic.presentation.screens.profile_edit.ProfileEditScreen
 
@@ -43,7 +44,7 @@ fun NavGraphBuilder.detailsNavGraph(navHostController: NavHostController){
             )
         ){
             it.arguments?.getString("post")?.let {
-                //DetailPostScreen(navHostController, post = it)
+                DetailPostScreen(navHostController, post = it)
             }
         }
 
