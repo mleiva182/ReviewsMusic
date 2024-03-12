@@ -46,7 +46,7 @@ class MyPostsViewModel @Inject constructor(
     fun delete(idPost: String) = viewModelScope.launch {
 
         deleteResponse = Response.Loading
-        postsUseCases.deletePost
+        val result = postsUseCases.deletePost(idPost)
 
     }
 

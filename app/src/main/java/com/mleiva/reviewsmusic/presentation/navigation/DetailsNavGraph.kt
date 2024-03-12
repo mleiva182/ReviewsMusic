@@ -9,6 +9,7 @@ import androidx.navigation.navigation
 import com.mleiva.reviewsmusic.presentation.screens.detail_post.DetailPostScreen
 import com.mleiva.reviewsmusic.presentation.screens.new_post.NewPostScreen
 import com.mleiva.reviewsmusic.presentation.screens.profile_edit.ProfileEditScreen
+import com.mleiva.reviewsmusic.presentation.screens.update_post.UpdatePostScreen
 
 /***
  * Project: ReviewsMusic
@@ -56,7 +57,7 @@ fun NavGraphBuilder.detailsNavGraph(navHostController: NavHostController){
             )
         ){
             it.arguments?.getString("post")?.let {
-                //UpdatePostScreen(navHostController, post = it)
+                UpdatePostScreen(navHostController, post = it)
             }
         }
     }

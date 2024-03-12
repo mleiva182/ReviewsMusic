@@ -11,5 +11,6 @@ data class PostsUseCases(
     val deletePost: DeletePost,
     val getPosts: GetPosts,
     val likePost: LikePost,
-    val deleteLikePost: DeleteLikePost
+    val deleteLikePost: DeleteLikePost,
+    val updatePost: UpdatePost
 )

@@ -27,6 +27,7 @@ import com.mleiva.reviewsmusic.domain.use_cases.posts.GetPosts
 import com.mleiva.reviewsmusic.domain.use_cases.posts.GetPostsByIdUser
 import com.mleiva.reviewsmusic.domain.use_cases.posts.LikePost
 import com.mleiva.reviewsmusic.domain.use_cases.posts.PostsUseCases
+import com.mleiva.reviewsmusic.domain.use_cases.posts.UpdatePost
 import com.mleiva.reviewsmusic.domain.use_cases.users.Create
 import com.mleiva.reviewsmusic.domain.use_cases.users.GetUserById
 import com.mleiva.reviewsmusic.domain.use_cases.users.SaveImage
@@ -89,7 +90,8 @@ object AppModule {
         deletePost = DeletePost(repository),
         getPosts = GetPosts(repository),
         likePost = LikePost(repository),
-        deleteLikePost = DeleteLikePost(repository)
+        deleteLikePost = DeleteLikePost(repository),
+        updatePost = UpdatePost(repository)
     )
 
     @Provides

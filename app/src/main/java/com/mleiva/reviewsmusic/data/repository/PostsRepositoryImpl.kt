@@ -172,4 +172,30 @@ class PostsRepositoryImpl @Inject constructor(
             Response.Failure(e)
         }
     }
+
+    override suspend fun update(post: Post, file: File?): Response<Boolean> {
+        return try {
+            //IMAGE
+            if(file != null) {
+                val fromFile = Uri.fromFile(file)
+                val ref = storagePostsRef.child(file.name)
+                val uploadTask = ref.putFile(fromFile).await()
+                val url = ref.downloadUrl.await()
+                post.image = url.toString()
+            }
+
+            val map: MutableMap<String, Any> = HashMap()
+            map["name"] = post.name
+            map["description"] = post.description
+            map["category"] = post.category
+            map["image"] = post.image
+            //DATA
+            postsRef.document(post.id).update(map).await()
+            Response.Success(true)
+
+        }catch (e: Exception){
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
 }

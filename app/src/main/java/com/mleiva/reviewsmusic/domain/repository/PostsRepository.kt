@@ -18,4 +18,5 @@ interface PostsRepository {
     fun getPosts(): Flow<Response<List<Post>>>
     suspend fun like(idPost: String, idUser: String): Response<Boolean>
     suspend fun deleteLike(idPost: String, idUser: String): Response<Boolean>
+    suspend fun update(post: Post, file: File?): Response<Boolean>
 }
