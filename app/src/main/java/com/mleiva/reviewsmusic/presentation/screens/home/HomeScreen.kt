@@ -1,6 +1,5 @@
 package com.mleiva.reviewsmusic.presentation.screens.home
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -25,7 +24,6 @@ import com.mleiva.reviewsmusic.presentation.navigation.HomeBottomBarScreen
  * From: com.mleiva.reviewsmusic.presentation.screens.home
  * Creted by: Marcelo Leiva on 26-02-2024 at 15:25
  ***/
-//@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(navHostController: NavHostController = rememberNavController()){
 
@@ -34,8 +32,8 @@ fun HomeScreen(navHostController: NavHostController = rememberNavController()){
     ) {
         HomeBottomBarNavGraph(it, navHostController = navHostController)
     }
-
 }
+
 
 @Composable
 fun BottomBar(navHostController: NavHostController){

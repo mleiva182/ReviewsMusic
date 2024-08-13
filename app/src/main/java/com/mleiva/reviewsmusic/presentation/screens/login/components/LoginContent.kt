@@ -79,9 +79,6 @@ fun BoxHeader(){
                 painter = painterResource(id = R.drawable.cd_and_vinil),
                 contentDescription = "Control de Xbox 360"
             )
-            Text(
-                text = "FIREBASE MVVM"
-            )
         }
 
     }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -86,8 +87,7 @@ fun NewPostContent(viewModel: NewPostViewModel = hiltViewModel()){
                         viewModel.onImageInput(viewModel.imageUri)
                         AsyncImage(
                             modifier = Modifier
-                                .height(180.dp)
-                                .width(100.dp)
+                                .fillMaxHeight()
                                 .fillMaxWidth()
                                 .clickable {
                                     dialogState.value = true
